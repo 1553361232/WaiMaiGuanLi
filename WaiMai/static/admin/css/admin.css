@@ -1,0 +1,134 @@
+/* 左边盒子 */
+.adminLeftBox{
+    background-color: #354052;
+    height: 999px;
+    padding-top: 18.4px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.icon_titile{
+   color: #47bac1;
+   font-size: 24px;
+   margin-right: 6px;
+   
+}
+.adminHead{
+    margin-top: 20px;
+}
+.admin_text{
+    display: inline-block;
+    color: #ffffff;
+}
+.align_middle{
+    color: #f8f9fa;
+    height: 24.8px;
+    padding: 0px;
+    font-size: 18.4px;
+    padding-left: 10px;
+}
+.icon_margin{
+    margin-right: 10px;
+}
+.sidebar-header{
+    color: #adb5bd;
+    background-color: transparent;
+    font-size: 12px;
+    margin-top: 36.4px;
+    padding-bottom: 6px;
+
+}
+
+/* 用户信息 */
+.userBox{
+    background-color: #2d3646;
+    padding: 11.2px 0px;
+    color: rgba(255, 255, 255,0.9);
+    margin-left:-24px ;
+    margin-right: -24px;
+    padding-left: 10px;
+}
+.iconColor{
+    color: #ffffff;
+    opacity: 0.5;
+    line-height: 20px;
+}
+
+/* 右边页面 */
+.adminRightBox{
+    background-color: #f5f9fc;
+}
+/* 头部导航 */
+.admin_header{
+    padding: 14px 20px;
+    background-color: #ffffff;
+    line-height: 40px;
+}
+.sear_logo{
+    display: inline-block; 
+    width: 26px;
+    height: 26px;
+    margin-right: 20px;
+    line-height: 40px;
+}
+.sear_logo:hover{
+    color: #47bac1  ;
+}
+.sear_logoBox{
+    display: flex;
+    padding-left: 0px;
+}
+.glyphicon-search{
+    color: #495057;
+    font-size: 26px;
+}
+.sear_text{
+    border: 0px;
+    outline: none;
+}
+/* 用户头像 */
+.userHead{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.user_name{
+    margin-right: 5px;
+}
+/* 主要内容 */
+.main{
+    padding: 0px 40px;
+}
+/* 页头 */
+.yetou{
+    padding: 12px 20px;
+        background-color: #ffffff;
+}
+.table>tbody>tr>td{
+    vertical-align: middle;
+}
+.model_main{
+    padding: 20px;
+}
+.addAdmin{
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+/* 表格 */
+ #adminTable th{
+    padding: 8px;
+}
+/*
+#adminTable td{
+    height: 44px;
+    line-height: 44px;
+    background-color: #f8f9fa;
+    border-bottom: 0.5px solid #adb5bd;
+    box-sizing: border-box;
+} */
+
+/* 分页 */
+.fenye{
+    display: flex;
+    justify-content: center;
+}
