@@ -6,7 +6,9 @@
 				<div class="input">
 					<label for="name">用户名</label>
 					<input type="text" name="name" id="name">
-					<span class="spin"></span>
+					<span class="spin" v-if="!loginStatus">用户名或密码不正确</span>
+					<span class="spin" v-else></span>
+
 				</div>
 				<div class="input">
 					<label for="pass">密码</label>
@@ -75,7 +77,8 @@
 		},
 		data() { 
 			return { 
-				msg: "世界你好"
+				// 登录状态
+				loginStatus:true
 			}
 		},
 		methods: {
@@ -90,6 +93,7 @@
 			},
 			// 登录
 			login: function () {
+				var _this = this;
 				var form = document.getElementById('loginForm');
 				var formData = new FormData(form);
 				var name = formData.get('name');
@@ -101,11 +105,17 @@
 					alert("用户名和密码不能为空")
 				} else {
 					// 请求登录
-					console.log(this.$qs.stringify(data));
 					this.$axios.post('http://localhost/admin.php/admin/loginModel', this.$qs.stringify(data)).then(res => {
-						console.log(res.data);
-						if(res.data!=false){
-							alert("登录陈工");
+						switch(res.data){
+							case "parent_admin":
+								console.log('进入parent_admin');
+								this.$router.push({name:'Admin',params:{id:1}});
+								break;
+							case "admin":
+								console.log('进入admin');
+								break;
+							default:
+								this.loginStatus = false;
 						}
 					});
 				}

@@ -15,7 +15,7 @@ $(function() {
       });
    }).blur(function() {
       $(".spin").css({
-         "width": "0px"
+         // "width": "0px"
       })
       if ($(this).val() == "") {
          $(this).parent(".input").each(function() {

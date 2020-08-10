@@ -262,15 +262,12 @@
         beforeCreate() {
             // 组件创建前请求数据
             var _this = this;
-            _this.$axios.get('http://localhost/admin.php/admin/selectData').then(res => {
-                for (let i = 0; i < res.data.length; i++) {
-                    _this.adminData.push(res.data[i]);
-                }
-            });
+            
         },
         created() {
             // 获取总页数
             this.selectData();
+            console.log(this.$route.params.id);
         },
         // 在模板渲染成html后调用
 

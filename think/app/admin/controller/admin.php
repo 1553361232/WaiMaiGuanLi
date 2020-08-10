@@ -49,7 +49,7 @@ class Admin extends BaseController{
     public function selectData(){
         global $pad;
         $Admin=Db::table('admin')->limit($pad)->page(1)->select();
-        return $Admin;
+        return json($Admin);
     }
     /* 更新数据
     $updateData 
@@ -140,13 +140,13 @@ class Admin extends BaseController{
         for($i=0;$i<count($ParAdmin);$i++){
             if($ParAdmin[$i]['Pausername']==$AdminName&&$ParAdmin[$i]['Papassword']==$AdminPassword){
                 // 进入一级管理原界面
-                $data= json($Admin);
+                $data= "parent_admin";
             }
         }
         for($i=0;$i<count($Admin);$i++){
             if($Admin[$i]['Aname']==$AdminName&&$Admin[$i]['Apassword']==$AdminPassword){
                 // 查看的是二级管理员的数据
-                $data= "http://localhost/admin.php/adminparent/adminparent";
+                $data= "admin";
             }
         }
         return $data;

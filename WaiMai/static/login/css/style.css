@@ -147,7 +147,7 @@
 .input .spin {
    background: #ED2553;
    z-index: 4;
-   width: 0;
+   color: #ED2553;
 }
 
 .overbox .input .spin {
