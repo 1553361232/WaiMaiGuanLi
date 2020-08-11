@@ -55,7 +55,7 @@
 </template>
 
 <script>
-	
+
 	import '../../../static/login/css/style.css';
 	import '../../../static/login/js/index.js';
 	import '../../../static/login/js/login.js';
@@ -66,19 +66,19 @@
 	export default {
 		created() {
 			//this.getAdmin();
-			document.body.style.backgroundImage="url(../static/login/images/bg.png)";
+			document.body.style.backgroundImage = "url(../static/login/images/bg.png)";
 		},
-		destroyed(){
-			document.body.style.backgroundImage="url()";	
+		destroyed() {
+			document.body.style.backgroundImage = "url()";
 		},
 		name: "Login",
 		components: {
 			// Confirm
 		},
-		data() { 
-			return { 
+		data() {
+			return {
 				// 登录状态
-				loginStatus:true
+				loginStatus: true
 			}
 		},
 		methods: {
@@ -106,13 +106,15 @@
 				} else {
 					// 请求登录
 					this.$axios.post('http://localhost/admin.php/admin/loginModel', this.$qs.stringify(data)).then(res => {
-						switch(res.data){
+						switch (res.data) {
 							case "parent_admin":
-								console.log('进入parent_admin');
-								this.$router.push({name:'Admin',params:{id:1}});
+								this.$router.push({ name: 'Admin', params: { show: 'parent_admin' } });
+								 this.$cookies.set("show", this.$route.params.show); //存session
+								 
 								break;
 							case "admin":
-								console.log('进入admin');
+								this.$router.push({ name: 'Admin', params: { show: 'admin' } });
+								this.$cookies.set("show", this.$route.params.show);
 								break;
 							default:
 								this.loginStatus = false;

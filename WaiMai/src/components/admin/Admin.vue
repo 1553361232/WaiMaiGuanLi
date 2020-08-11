@@ -15,12 +15,20 @@
                     <div class="col-lg-12 sidebar-header">Select</div>
                 </div>
                 <!-- 用户信息 -->
-                <div class="row userBox">
+                <div v-if="show=='parent_admin'" class="row userBox userbox_active" data-title="parent_admin">
                     <div class="col-lg-2 glyphicon glyphicon-user iconColor"></div>
                     <div class="col-lg-8">{{adminif}}</div>
                     <div class="col-lg-2"></div>
                 </div>
+                <!-- 外卖信息管理 -->
+                <!-- 外卖信息 -->
+                <div class="row userBox" data-title="takeout">
+                    <div class="col-lg-2 glyphicon glyphicon-book iconColor"></div>
+                    <div class="col-lg-8">{{takeout}}</div>
+                    <div class="col-lg-2"></div>
+                </div>
             </div>
+            <!-- 右边内容 -->
             <div class="col-lg-10 adminRightBox">
                 <!-- 头部导航 -->
                 <div class="row admin_header">
@@ -36,8 +44,9 @@
                         <div class="glyphicon glyphicon-chevron-down"></div>
                     </div>
                 </div>
-                <!-- 主要内容 -->
-                <div class="page-header yetou">
+                <!-- 主要内容 -->、
+                <!-- 用户信息 -->
+                <div v-if="show=='parent_admin'" class="page-header yetou">
                     <h1>{{adminif}}<button class="btn btn-info addAdmin glyphicon glyphicon-plus" data-toggle="modal"
                             @click="addAdminModel('addModal')"></button></h1>
                     <table id="adminTable" class="table table-striped table-hover">
@@ -82,6 +91,8 @@
                         </ul>
                     </nav>
                 </div>
+                <!-- 外卖信息 -->
+                <Takeout v-if="show=='admin'" />
                 <!-- 修改页面的模态框 -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                     aria-hidden="true">
@@ -246,33 +257,44 @@
     import 'bootstrap/dist/js/bootstrap.min.js'
     import '../../../static/admin/css/admin.css';
     import '../../../static/admin/css/public.css';
-
+    //外卖信息组件
+    import Takeout from '@/components/admin/Takeout';
     export default {
         name: 'Admin',
         data() {
             return {
                 adminif: "用户信息",
+                takeout: "外卖信息",
                 adminData: [],
                 index: "",
                 // 总页数
-                countRes: 0
+                countRes: 0,
+                //登录过来赋予的权限
+                show: "",
+                //导航栏
+                //nav:"",
             }
+        },
+        components: {
+            Takeout
         },
 
         beforeCreate() {
             // 组件创建前请求数据
             var _this = this;
-            
+
         },
         created() {
             // 获取总页数
             this.selectData();
-            console.log(this.$route.params.id);
+            this.show = this.$cookies.get("show");
+            
+
+
         },
         // 在模板渲染成html后调用
 
         methods: {
-
             // 请求获取数据
             selectData: function () {
                 var _this = this;
@@ -311,12 +333,25 @@
                             _this.changePage(Pad, page, $(".light"));
                         }
                     })
+                    $(".userBox").bind('click', function () {
+                        $(this).addClass("userbox_active").siblings().removeClass("userbox_active");
+                        let data_title = $(this).attr('data-title')
+                        // if(data_title=='takeout'){
+                        //     _this.nav = data_title;
+                        // }
+                        //this.show = _this.$cookies.get("show");
+                        
+                    })
 
                 })
 
             },
-            // 数据请求
+            // 导航切换
+            changeVue: function () {
+
+            },
             /*
+                页面切换
                 Pad传递显示的条数,
                 ele出发当前事件的元素
             */

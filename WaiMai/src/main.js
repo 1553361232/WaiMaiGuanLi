@@ -10,6 +10,10 @@ import Global from '../static/config/global'
 import $ from 'jquery'
 import 'bootstrap';
 import './assets/iconfont/iconfont.js';
+import VueSession from 'vue-session'
+import VueCookies from 'vue-cookies'
+
+
 
 
 //使用jquery
@@ -20,9 +24,11 @@ $(function(){
 // axios挂载到原型上方便使用
 Vue.prototype.$axios = axios;
 Vue.prototype.$qs = qs;
-Vue.prototype.Global = Global;
-Vue.use(VueResource);
+Vue.prototype.Global = Global; 
 
+Vue.use(VueResource);
+Vue.use(VueSession);
+Vue.use(VueCookies);
 
 Vue.config.productionTip = false
 

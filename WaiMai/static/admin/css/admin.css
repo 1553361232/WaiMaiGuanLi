@@ -40,12 +40,18 @@
 
 /* 用户信息 */
 .userBox{
-    background-color: #2d3646;
     padding: 11.2px 0px;
     color: rgba(255, 255, 255,0.9);
     margin-left:-24px ;
     margin-right: -24px;
     padding-left: 10px;
+    cursor: pointer;
+}
+.userBox:hover{
+    background-color: #2d3646;
+}
+.userbox_active{
+    background-color: #2d3646;
 }
 .iconColor{
     color: #ffffff;
