@@ -7,6 +7,12 @@
     use think\facade\Session;
     use think\facade\Config;
 class Admin extends BaseController{
+    //接口测试
+    public function jiekou(){
+        $Db=Db::table('admin')->select();
+        // global $pad=2;
+        return Session::get('page');
+    }
     //渲染登录页面
     public function login(){
         return view('login');
@@ -23,7 +29,9 @@ class Admin extends BaseController{
             $page=1;
             Session::set('page', $page);
         }
-        
+        if($pad==null){
+            $pad=5;
+        }
         $Admin=Db::table('admin')->limit($pad)->page($page)->select();
         return $Admin;
     }
@@ -40,17 +48,12 @@ class Admin extends BaseController{
     public function stu(){
         return view();
     }
-    //接口测试
-    public function jiekou(){
-        $Db=Db::table('admin')->select();
-        return json($Db);
-    }
     //查询管理员数据
-    public function selectData(){
-        global $pad;
-        $Admin=Db::table('admin')->limit($pad)->page(1)->select();
-        return json($Admin);
-    }
+    // public function selectData(){
+    //     // $Admin=Db::table('admin')->limit(1)->page(1)->select();
+    //     // return json($Admin);
+    //     //return $limt;
+    // }
     /* 更新数据
     $updateData 
     */
@@ -72,7 +75,7 @@ class Admin extends BaseController{
         $AregisterDate = Request::param('AregisterDate');
         $Apermission = Request::param('Apermission');
         $updateData = Db::name('admin')->update(['Aname'=>$Aname,'Apassword'=>$Apassword,'Aphone'=>$Aphone,'AregisterDate'=>$AregisterDate,'Apermission'=>$Apermission,'Aid'=>$Aid]);
-        return $this->selectData();
+        return $this->admin();
         
     }
     // 添加用户
@@ -99,7 +102,7 @@ class Admin extends BaseController{
             $data = ['Aid' => $Aid, 'Aname' => $Aname,'Apassword' => $Apassword,'Aphone' => 
             $Aphone,'AregisterDate' => $AregisterDate,'Apermission' => $Apermission,'Paid'=> 'PA001'];
             Db::name('admin')->insert($data);
-            return $this->selectData();
+            return $this->admin();
         }else{
             return -1;
         }
@@ -109,7 +112,7 @@ class Admin extends BaseController{
     function deleteData(){
         $Aid = Request::param('Aid');
          Db::table('admin')->delete($Aid);
-         return $this->selectData();
+         return $this->admin();
     }
     // 地址拼接
     /**

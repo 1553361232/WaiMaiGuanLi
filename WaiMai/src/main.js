@@ -12,23 +12,52 @@ import 'bootstrap';
 import './assets/iconfont/iconfont.js';
 import VueSession from 'vue-session'
 import VueCookies from 'vue-cookies'
+import Vuex from 'vuex'
+import 'lib-flexible/flexible'
+import vuexI18n from 'vuex-i18n'
 
 
 
 
 //使用jquery
-$(function(){
+$(function () {
   //console.log("asd");
 })
+
 
 // axios挂载到原型上方便使用
 Vue.prototype.$axios = axios;
 Vue.prototype.$qs = qs;
-Vue.prototype.Global = Global; 
+Vue.prototype.Global = Global;
 
 Vue.use(VueResource);
 Vue.use(VueSession);
 Vue.use(VueCookies);
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  modules: {
+    i18n: vuexI18n
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    }
+  }
+});
+
+
+Vue.use(vuexI18n.plugin, store);
+
+const translationsEn = {
+  "content": "This is some {type} content"
+};
+Vue.i18n.add('en', translationsEn);
+Vue.i18n.set('en');
+
 
 Vue.config.productionTip = false
 
@@ -36,6 +65,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

@@ -14,17 +14,10 @@
                 <div class="row">
                     <div class="col-lg-12 sidebar-header">Select</div>
                 </div>
-                <!-- 用户信息 -->
-                <div v-if="show=='parent_admin'" class="row userBox userbox_active" data-title="parent_admin">
-                    <div class="col-lg-2 glyphicon glyphicon-user iconColor"></div>
-                    <div class="col-lg-8">{{adminif}}</div>
-                    <div class="col-lg-2"></div>
-                </div>
-                <!-- 外卖信息管理 -->
-                <!-- 外卖信息 -->
-                <div class="row userBox" data-title="takeout">
+                <div v-for="(item,index) in tabs" :class="{active:index == num}" @click="tab(index)" class="row userBox"
+                    data-title="takeout">
                     <div class="col-lg-2 glyphicon glyphicon-book iconColor"></div>
-                    <div class="col-lg-8">{{takeout}}</div>
+                    <div class="col-lg-8">{{item}}</div>
                     <div class="col-lg-2"></div>
                 </div>
             </div>
@@ -44,204 +37,219 @@
                         <div class="glyphicon glyphicon-chevron-down"></div>
                     </div>
                 </div>
-                <!-- 主要内容 -->、
-                <!-- 用户信息 -->
-                <div v-if="show=='parent_admin'" class="page-header yetou">
-                    <h1>{{adminif}}<button class="btn btn-info addAdmin glyphicon glyphicon-plus" data-toggle="modal"
-                            @click="addAdminModel('addModal')"></button></h1>
-                    <table id="adminTable" class="table table-striped table-hover">
-                        <th>id</th>
-                        <th>姓名</th>
-                        <th>密码</th>
-                        <th>手机号</th>
-                        <th>注册日期</th>
-                        <th>权限</th>
-                        <th>操作</th>
-                        <tbody>
-                            <tr v-for="(admin,index) in adminData" :key="index">
-                                <td>{{admin.Aid}}</td>
-                                <td>{{admin.Aname}}</td>
-                                <td>{{admin.Apassword}}</td>
-                                <td>{{admin.Aphone}}</td>
-                                <td>{{admin.AregisterDate}}</td>
-                                <td v-if="admin.Apermission == 1">已授权</td>
-                                <td v-else>未授权</td>
-                                <td>
-                                    <a href="#" class="btn btn-info" id="updateAdmin"
-                                        @click="updateAdmin(index,admin.Aid,admin.Aname,admin.Apassword,admin.Aphone,admin.AregisterDate,admin.Apermission)">修改</a>
-                                    <button class="btn btn-danger" type="button"
-                                        @click="deleteAdmin(admin.Aid)">删除</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- 分页 -->
-                    <nav aria-label="Page navigation" class="fenye">
-                        <ul class="pagination">
-                            <li id="Pre">
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li id="Next">
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <!-- 外卖信息 -->
-                <Takeout v-if="show=='admin'" />
-                <!-- 修改页面的模态框 -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <!-- 模态框头部 -->
-                            <div class="modal-header">
-                                <!-- 关闭按钮 -->
-                                <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">&times;</button>
-                                <!-- 标题 -->
-                                <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
-                            </div>
-                            <!-- 主要内容 -->
-                            <div class="model_main">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="Aid">编&nbsp;&nbsp;&nbsp;号</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" id="Aid" disabled
-                                                placeholder="Large input">
-                                        </div>
+                <!-- 在此处添加主要内容 -->
+                <div class="tabCon">
+                    <!-- 用户信息 -->
+                    <div v-if="index==0" v-for="(tabCon,index) in tabContents" v-show="index==num">
+                        <!-- 主要内容 -->
+                        <!-- 用户信息 -->
+                        <div v-if="show=='parent_admin'" class="page-header yetou">
+                            <h1>{{adminif}}<button class="btn btn-info addAdmin glyphicon glyphicon-plus"
+                                    data-toggle="modal" @click="addAdminModel('addModal')"></button></h1>
+                            <table id="adminTable" class="table table-striped table-hover">
+                                <th>id</th>
+                                <th>姓名</th>
+                                <th>密码</th>
+                                <th>手机号</th>
+                                <th>注册日期</th>
+                                <th>权限</th>
+                                <th>操作</th>
+                                <tbody>
+                                    <tr v-for="(admin,index) in adminData" :key="index">
+                                        <td>{{admin.Aid}}</td>
+                                        <td>{{admin.Aname}}</td>
+                                        <td>{{admin.Apassword}}</td>
+                                        <td>{{admin.Aphone}}</td>
+                                        <td>{{admin.AregisterDate}}</td>
+                                        <td v-if="admin.Apermission == 1">已授权</td>
+                                        <td v-else>未授权</td>
+                                        <td>
+                                            <a href="#" class="btn btn-info" id="updateAdmin"
+                                                @click="updateAdmin(index,admin.Aid,admin.Aname,admin.Apassword,admin.Aphone,admin.AregisterDate,admin.Apermission)">修改</a>
+                                            <button class="btn btn-danger" type="button"
+                                                @click="deleteAdmin(admin.Aid)">删除</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- 分页 -->
+                            <nav aria-label="Page navigation" class="fenye">
+                                <ul class="pagination">
+                                    <li id="Pre">
+                                        <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li id="Next">
+                                        <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- 外卖信息 -->
+                        <Takeout v-if="show=='admin'" />
+                        <!-- 修改页面的模态框 -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <!-- 模态框头部 -->
+                                    <div class="modal-header">
+                                        <!-- 关闭按钮 -->
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                        <!-- 标题 -->
+                                        <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="Aname">姓&nbsp;&nbsp;&nbsp;名</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" id="Aname"
-                                                placeholder="Small input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label"
-                                            for="Apassword">密&nbsp;&nbsp;&nbsp;码</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="password" id="Apassword"
-                                                placeholder="Small input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="Aphone">手机号</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" id="Aphone"
-                                                placeholder="Small input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="AregisterDate">注册日期</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="date" id="AregisterDate"
-                                                placeholder="Small input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label"
-                                            for="AregisterDate">权&nbsp;&nbsp;&nbsp;限</label>
-                                        <div class="col-sm-10">
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="Apermission" id="Apermission" value="1"
-                                                        class="Aper1">是
-                                                </label>
-                                                <label>
-                                                    <input type="radio" name="Apermission" class="Aper2" value="0">否
-                                                </label>
+                                    <!-- 主要内容 -->
+                                    <div class="model_main">
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"
+                                                    for="Aid">编&nbsp;&nbsp;&nbsp;号</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" id="Aid" disabled
+                                                        placeholder="Large input">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <a href="#" id="admin_submit" type="button" class="btn btn-primary"
-                                    @click="submitAdmin()">提交更改</a>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal -->
-                </div>
-                <!-- 添加页面的模态框 -->
-                <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <!-- 模态框头部 -->
-                            <div class="modal-header">
-                                <!-- 关闭按钮 -->
-                                <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">&times;</button>
-                                <!-- 标题 -->
-                                <h4 class="modal-title" id="myModalLabel">添加用户信息</h4>
-                            </div>
-                            <!-- 主要内容 -->
-                            <div class="model_main">
-                                <form class="form-horizontal" id="addAdminForm">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="addAid">证件号</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" id="addAid" name="Aid" require
-                                                v-on:change="testAid($event)" placeholder="请输入身份证号码" title="请输入正确的格式">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="addAname">用户名</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" id="addAname" name="Aname" require
-                                                placeholder="用户名">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="addAphone">手机号</label>
-                                        <div class="col-sm-10">
-                                            <input v-on:change="testAphone($event)" class="form-control" type="text"
-                                                id="addAphone" require placeholder="手机号" name="Aphone">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label"
-                                            for="Apassword">密&nbsp;&nbsp;&nbsp;码</label>
-                                        <div class="col-sm-10">
-                                            <input v-on:change="testApassword($event)" class="form-control"
-                                                name="addApassword" type="password" id="addApassword" require
-                                                placeholder="请输入8-16位的有效字符，至少一个大写字母或一个小写字母">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label"
-                                            for="AregisterDate">权&nbsp;&nbsp;&nbsp;限</label>
-                                        <div class="col-sm-10">
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="Apermission" value="1" class="Aper1"
-                                                        checked>是
-                                                </label>
-                                                <label>
-                                                    <input type="radio" name="Apermission" class="Aper2" value="0">否
-                                                </label>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"
+                                                    for="Aname">姓&nbsp;&nbsp;&nbsp;名</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" id="Aname"
+                                                        placeholder="Small input">
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"
+                                                    for="Apassword">密&nbsp;&nbsp;&nbsp;码</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="password" id="Apassword"
+                                                        placeholder="Small input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="Aphone">手机号</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" id="Aphone"
+                                                        placeholder="Small input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="AregisterDate">注册日期</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="date" id="AregisterDate"
+                                                        placeholder="Small input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"
+                                                    for="AregisterDate">权&nbsp;&nbsp;&nbsp;限</label>
+                                                <div class="col-sm-10">
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="Apermission" id="Apermission"
+                                                                value="1" class="Aper1">是
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="Apermission" class="Aper2"
+                                                                value="0">否
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" @click="addAdmin()">提交</button>
-                            </div>
-                            </form>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <a href="#" id="admin_submit" type="button" class="btn btn-primary"
+                                            @click="submitAdmin()">提交更改</a>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal -->
+                        </div>
+                        <!-- 添加页面的模态框 -->
+                        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <!-- 模态框头部 -->
+                                    <div class="modal-header">
+                                        <!-- 关闭按钮 -->
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                        <!-- 标题 -->
+                                        <h4 class="modal-title" id="myModalLabel">添加用户信息</h4>
+                                    </div>
+                                    <!-- 主要内容 -->
+                                    <div class="model_main">
+                                        <form class="form-horizontal" id="addAdminForm">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="addAid">证件号</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" id="addAid" name="Aid"
+                                                        require v-on:change="testAid($event)" placeholder="请输入身份证号码"
+                                                        title="请输入正确的格式">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="addAname">用户名</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" id="addAname" name="Aname"
+                                                        require placeholder="用户名">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="addAphone">手机号</label>
+                                                <div class="col-sm-10">
+                                                    <input v-on:change="testAphone($event)" class="form-control"
+                                                        type="text" id="addAphone" require placeholder="手机号"
+                                                        name="Aphone">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"
+                                                    for="Apassword">密&nbsp;&nbsp;&nbsp;码</label>
+                                                <div class="col-sm-10">
+                                                    <input v-on:change="testApassword($event)" class="form-control"
+                                                        name="addApassword" type="password" id="addApassword" require
+                                                        placeholder="请输入8-16位的有效字符，至少一个大写字母或一个小写字母">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"
+                                                    for="AregisterDate">权&nbsp;&nbsp;&nbsp;限</label>
+                                                <div class="col-sm-10">
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="Apermission" value="1"
+                                                                class="Aper1" checked>是
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="Apermission" class="Aper2"
+                                                                value="0">否
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-primary" @click="addAdmin()">提交</button>
+                                    </div>
+                                    </form>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    </div>
+                    <!-- 外卖信息 -->
+                    <div v-if="index==1" v-for="(tabCon,index) in tabContents" v-show="index==num">
+                        <Takeout/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -273,6 +281,13 @@
                 show: "",
                 //导航栏
                 //nav:"",
+
+
+
+                //测试中...
+                tabs: ["用户信息", "外卖信息"],
+                tabContents: ["内容一", "内容二", "内容三"],
+                num: '',
             }
         },
         components: {
@@ -288,13 +303,21 @@
             // 获取总页数
             this.selectData();
             this.show = this.$cookies.get("show");
-            
+
 
 
         },
         // 在模板渲染成html后调用
 
         methods: {
+            //测试中...
+            tab: function (index) {
+                this.num = index;
+            },
+
+
+
+
             // 请求获取数据
             selectData: function () {
                 var _this = this;
@@ -340,7 +363,7 @@
                         //     _this.nav = data_title;
                         // }
                         //this.show = _this.$cookies.get("show");
-                        
+
                     })
 
                 })
